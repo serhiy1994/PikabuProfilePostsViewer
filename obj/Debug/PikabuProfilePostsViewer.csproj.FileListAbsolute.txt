@@ -1,0 +1,8 @@
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csprojResolveAssemblyReference.cache
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.MainForm.resources
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csproj.GenerateResource.Cache
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\bin\Debug\PikabuProfilePostsViewer.exe.config
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\bin\Debug\PikabuProfilePostsViewer.exe
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\bin\Debug\PikabuProfilePostsViewer.pdb
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.exe
+C:\Users\Тоня\Documents\SharpDevelop Projects\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.pdb
