@@ -14,16 +14,3 @@ D:\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.MainForm.resource
 D:\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csproj.GenerateResource.Cache
 D:\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.exe
 D:\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.pdb
-D:\царський хлам\PikabuProfilePostsViewer\bin\Debug\PikabuProfilePostsViewer.exe.config
-D:\царський хлам\PikabuProfilePostsViewer\bin\Debug\PikabuProfilePostsViewer.exe
-D:\царський хлам\PikabuProfilePostsViewer\bin\Debug\PikabuProfilePostsViewer.pdb
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.MainForm.resources
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csproj.GenerateResource.Cache
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.exe
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.pdb
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csprojAssemblyReference.cache
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csproj.CoreCompileInputs.cache
-D:\царський хлам\PikabuProfilePostsViewer\obj\Debug\PikabuProfilePostsViewer.csproj.CopyComplete
-D:\царський хлам\PikabuProfilePostsViewer\bin\Debug\HtmlAgilityPack.dll
-D:\царський хлам\PikabuProfilePostsViewer\bin\Debug\HtmlAgilityPack.pdb
-D:\царський хлам\PikabuProfilePostsViewer\bin\Debug\HtmlAgilityPack.xml

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using HtmlAgilityPack;
@@ -10,19 +13,14 @@ namespace PikabuProfilePostsViewer
 {
 	public partial class MainForm : Form
 	{
-        int pages = 0;
-        int posts = 0;
+        int pages = 0, posts = 0;
         int currentPost = 1;
-        int lastPage = 10;
-        int sortColumn = -1;
+        int lastPage = 10; //posts on the last page; literally also posts per page
+        int sortColumn = -1; //sorting ListView flag
         string username = string.Empty;
         string url = "https://pikabu.ru/@";
-        string postNumber = "NULL";
-        string postDate = "NULL";
-        string postRating = "NULL";
-        string postTitle = "NULL";
-        string postLink = "NULL";
-        Regex regex = new Regex("[0-9]+?$");
+        string postNumber = "NULL", postDate = "NULL", postRating = "NULL", postTitle = "NULL", postLink = "NULL";
+        Regex postCode = new Regex("[0-9]+?$");
         HtmlWeb web = new HtmlWeb();        
         HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
         //ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType) 768; //doesn't work. WHY? :(
@@ -65,23 +63,27 @@ namespace PikabuProfilePostsViewer
                         {
                             posts = Convert.ToInt32(doc.DocumentNode.SelectSingleNode("//div[contains(@class,'profile__section')][2]/span[contains(@class,'profile__digital')][4]/b").InnerText);
                             pages = posts % 10 == 0 ? posts / 10 : (posts / 10 + 1);
-                            label2.Text = "Status: " + posts.ToString() + " posts found on " + pages.ToString() + " pages";
+                            label2.Text = "Status: " + posts.ToString() + " posts found on " + pages.ToString() + " pages. 0 posts loaded";
                             for (int p = 1; p <= pages; p++)
                             {
                                 if (p == pages) lastPage = posts % 10;
                                 try
                                 {
-                                    doc = web.Load(url + "?page=" + p.ToString()); //ukazat pochemu
-                                    for (int i = 0; i < lastPage; i++)
+                                    doc = web.Load(url + "?page=" + p.ToString()); //if you place this line in the end of the page loop (near line 95-96), it causes a bug: the first post from the 1st page will be also the first on the 2nd page, istead the first post from the 2nd page will be the first on the 3rd page, etc.
+                                    List<HtmlNode> nodes = doc.DocumentNode.SelectNodes("//div[@class='story__user user']").Cast<HtmlNode>().ToList(); //lines 72 and 77 have been written because the line 76 doesn't work
+                                    for (int i = 1; i <= lastPage; i++)
                                     {
                                         postNumber = currentPost.ToString();
-                                        //postDate = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + (i + 1).ToString() + "]/div[contains(@class, 'story__main')]/div[contains(@class, 'story__footer')]/div[contains(@class, 'story__user user')]/div[contains(@class, 'user__info-item')]/time").GetAttributeValue("datetime", "NULL");
-                                        postRating = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + (i + 1).ToString() + "]").GetAttributeValue("data-rating", "DELETED");
-                                        postTitle = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + (i + 1).ToString() + "]/div[contains(@class, 'story__main')]/header/h2/a").InnerText.Replace("&quot;", "\"");
-                                        postLink = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + (i + 1).ToString() + "]/div[contains(@class, 'story__main')]/header/h2/a").GetAttributeValue("href", "NULL");
+                                        //postDate = doc.DocumentNode.SelectSingleNode("//div[@class='story__main']/div[@class='story__footer']/div[@class='story__user user']/div[@class='user__info user__info_left']/div[@class='user__info-item'][" + (i * 2).ToString() + "]/time").GetAttributeValue("datetime", "NULL"); //doesn't work. WHY? :(
+                                        postDate = nodes[i - 1].SelectSingleNode(".//div[@class='user__info-item']/time").GetAttributeValue("datetime", "NULL");
+                                        DateTimeOffset dto = DateTimeOffset.Parse(postDate, CultureInfo.InvariantCulture);
+                                        postDate = dto.ToLocalTime().ToString("dd'/'MM'/'yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                                        postRating = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + i.ToString() + "]").GetAttributeValue("data-rating", "DELETED");
+                                        postTitle = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + i.ToString() + "]/div[contains(@class, 'story__main')]/header/h2/a").InnerText.Replace("&quot;", "\"");
+                                        postLink = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'stories-feed__container')]/article[" + i.ToString() + "]/div[contains(@class, 'story__main')]/header/h2/a").GetAttributeValue("href", "NULL");
                                         if (checkBox1.Checked)
                                         {
-                                            Match m = regex.Match(postLink);
+                                            Match m = postCode.Match(postLink);
                                             postLink = "https://pikabu.ru/story/_" + m.Value;
                                         }
                                         ListViewItem postRow = new ListViewItem();
@@ -133,6 +135,10 @@ namespace PikabuProfilePostsViewer
             FileInfo file = new FileInfo(@"Pikabu userprofiles\" + textBox1.Text + ".txt");
             if (file.Exists == true)
                 label2.Text = "Status: Saving process completed. Ready for the next user";
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Pikabu profile posts viewer\nVersion 1.0 (04.01.2020)\nMade by serhiy1994 from Pikabu\nThanks to: Jawad, Jeff Mercado (stackoverflow), OwenGlendower (Cyberforum), iranaut, Malica (Pikabu)", "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
         {
