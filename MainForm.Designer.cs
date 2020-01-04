@@ -1,12 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Тоня
- * Date: 02.05.2019
- * Time: 17:16
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-namespace PikabuProfilePostsViewer
+﻿namespace PikabuProfilePostsViewer
 {
 	partial class MainForm
 	{
